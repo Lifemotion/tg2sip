@@ -166,7 +166,7 @@ private:
                             std::cin >> first_name;
                             std::cout << "Enter your last name: " << std::flush;
                             std::cin >> last_name;
-                            send_query(td_api::make_object<td_api::registerUser>(first_name, last_name),
+                            send_query(td_api::make_object<td_api::registerUser>(first_name, last_name,false),
                                        create_authentication_query_handler());
                         },
                         [this](td_api::authorizationStateWaitPassword &) {
@@ -179,6 +179,20 @@ private:
                         [this](td_api::authorizationStateWaitOtherDeviceConfirmation &state) {
                             std::cout << "Confirm this login link on another device: " << state.link_ << std::endl;
                         },
+                        [this](td_api::authorizationStateWaitEmailAddress&) {
+                            std::cout << "Enter email (not working yet): " << std::flush;
+                            std::string phone_number;
+                            std::cin >> phone_number;
+                           // send_query(td_api::make_object<td_api::setAuthenticationPhoneNumber>(phone_number, nullptr),
+                            //    create_authentication_query_handler());
+                        },
+                    [this](td_api::authorizationStateWaitEmailCode&) {
+                        std::cout << "Enter email code (not working yet): " << std::flush;
+                        std::string phone_number;
+                        std::cin >> phone_number;
+                        // send_query(td_api::make_object<td_api::setAuthenticationPhoneNumber>(phone_number, nullptr),
+                         //    create_authentication_query_handler());
+                    },
                         [this](td_api::authorizationStateWaitPhoneNumber &) {
                             std::cout << "Enter phone number: " << std::flush;
                             std::string phone_number;
@@ -186,7 +200,7 @@ private:
                             send_query(td_api::make_object<td_api::setAuthenticationPhoneNumber>(phone_number, nullptr),
                                        create_authentication_query_handler());
                         },
-                        [this](td_api::authorizationStateWaitEncryptionKey &) {
+                     /*   [this](td_api::authorizationStateWaitEncryptionKey&) {
                             send_query(td_api::make_object<td_api::checkDatabaseEncryptionKey>(""),
                                        create_authentication_query_handler());
 
@@ -205,10 +219,10 @@ private:
                                 send_query(td_api::make_object<td_api::disableProxy>(), [](Object) {});
                             }
 
-                        },
+                        },*/
                         [this](td_api::authorizationStateWaitTdlibParameters &) {
-                            auto lib_parameters = td_api::make_object<td_api::tdlibParameters>();
-                            lib_parameters = td_api::make_object<td_api::tdlibParameters>();
+                            auto lib_parameters = td_api::make_object<td_api::setTdlibParameters>();
+                            lib_parameters = td_api::make_object<td_api::setTdlibParameters>();
 
                             lib_parameters->api_id_ = settings.api_id();
                             lib_parameters->api_hash_ = settings.api_hash();
@@ -223,9 +237,9 @@ private:
                             lib_parameters->use_chat_info_database_ = true;
                             lib_parameters->use_message_database_ = false;
                             lib_parameters->use_secret_chats_ = false;
-                            lib_parameters->enable_storage_optimizer_ = true;
+                            //lib_parameters->enable_storage_optimizer_ = true;
 
-                            send_query(td_api::make_object<td_api::setTdlibParameters>(std::move(lib_parameters)),
+                            send_query(std::move(lib_parameters),
                                        create_authentication_query_handler());
                         }));
     }

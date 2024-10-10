@@ -16,6 +16,7 @@
  */
 
 #include <thread>
+#include <optional>
 #include <iostream>
 #include <csignal>
 #include <variant>

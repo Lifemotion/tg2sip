@@ -8,3 +8,9 @@ docker/etc/*
 
 !**/.gitkeep
 
+.vs
+CMakeFiles
+liblibtgvoip.a
+CMakeCache.txt
+Makefile
+cmake_install.cmake

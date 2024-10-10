@@ -185,11 +185,11 @@ namespace state_machine::actions {
             headers.push_back(header);
         }
 
-        if (!user->username_.empty()) {
+        /*if (!user->username_.empty()) {
             header.hName = "X-TG-Username";
             header.hValue = user->username_;
             headers.push_back(header);
-        }
+        }*/
 
         if (!user->phone_number_.empty()) {
             header.hName = "X-TG-Phone";
@@ -802,9 +802,9 @@ void Gateway::load_cache() {
             return;
         }
 
-        if (!user->username_.empty()) {
+        /*if (!user->username_.empty()) {
             cache_.username_cache.emplace(user->username_, user->id_);
-        }
+        }*/
 
         if (!user->phone_number_.empty()) {
             cache_.phone_cache.emplace(user->phone_number_, user->id_);
