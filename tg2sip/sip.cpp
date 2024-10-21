@@ -29,7 +29,8 @@ void LogWriter::write(const pj::LogEntry &entry) {
 AccountConfig::AccountConfig(Settings &settings) {
 
     idUri = settings.id_uri();
-
+    //regConfig.registrarUri = "sip:rdx";
+    //sipConfig.authCreds.push_back(pj::AuthCredInfo("digest", "*", "user", 0, "pass"));
     // in case SIP timer RFC4028 is used
     // required when registration is used
     callConfig.timerMinSESec = 120;
